@@ -1,0 +1,11 @@
+{
+	"name": "myJDRBotNow",
+	"version": "1.0.0",
+	"description": "myDicordBotNow",
+	"main": "bot.js",
+	"author": "Greedy The Third",
+	"dependencies": {
+		"discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+		"winston": "^2.4.4"
+	}
+}
