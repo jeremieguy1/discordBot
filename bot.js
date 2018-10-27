@@ -19,8 +19,12 @@ bot.on('ready', function (evt) {
 });
 
 var tabChance = ['C', 'C', 'M', 'M'] ;
+
 function roll(user, type) {
-    var nb = Math.ceil(Math.random() * (type + 1))
+    if(isNaN(type)) {
+        return "Valeur non valide --> Usage : 'd valeur_entiere' "
+    }
+    var nb = Math.ceil(Math.random() * (type))
     var crit = ''
         if(type === 100) {
             if(nb <= 5)  {
@@ -74,16 +78,15 @@ bot.on("message", function (user, userID, channelID, message, evt) {
     // It will listen for messages that will start with `!`
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
-        var cmd = args[0];
-        
+        var cmd = args[0];        
         args = args.splice(1);
-        //Console.logger(args)
+
         switch(cmd) {
             // !info
             case "info":
                 bot.sendMessage({
                     to: channelID,
-                    message: " Ce bot réalise des lancés de dés \n Tape !d suivi de la valeur souhaité et ça roule (!commandes pour toutes les regarder) \n Exemple : !d4"                     
+                    message: " Ce bot réalise des lancés de dés \n Tape !d suivi d'un espace et de la valeur souhaitée et ça roule (!commandes pour toutes les regarder) \n Exemple : !d 4"                     
                 });
                 break;
              // !info_mj
@@ -100,18 +103,25 @@ bot.on("message", function (user, userID, channelID, message, evt) {
                     message: " Liste des commandes : \n - !info : Description du bot \n - !d4 : Pour lancer un dé 4 \n - !d6 : Pour lancer un dé 6 \n - !d100 : Pour lancer un dé 100 \n - !hello : ça mange pas de pain \n - !hello_everybody : ça mange pas de pain non plus \n - !chance : Pour voir l'état des dés de Chance/Malchance (Reset quand le bot se déco) \n - !chance_use : Pour utiliser un dé de Chance \n - !chance_add : Pour ajouter un dé de Chance \n"             
                 });
                 break;
-            // !d4
-            case 'd4': "value", 
+            // !d type
+            case "d": 
                 bot.sendMessage({
                     to: channelID,
-                    message: roll(user, 4)                
+                    message: roll(user, message.substring(3).split(' '))   
+                });
+                break;
+            // !d4
+            case "d4": 
+                bot.sendMessage({
+                    to: channelID,
+                    message: roll(user, 4)   
                 });
                 break;
             // !d6
             case 'd6':
                 bot.sendMessage({
                     to: channelID,
-                    message: roll(user, 6) 
+                    message: roll(user, 6)
                 });
                 break;
                         case 'd8':
